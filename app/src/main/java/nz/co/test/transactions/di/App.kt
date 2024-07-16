@@ -1,4 +1,4 @@
-package nz.co.test.transactions
+package nz.co.test.transactions.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
