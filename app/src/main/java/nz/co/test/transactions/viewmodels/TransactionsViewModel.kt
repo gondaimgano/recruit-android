@@ -3,9 +3,11 @@ package nz.co.test.transactions.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import nz.co.test.transactions.services.Transaction
 import nz.co.test.transactions.use_cases.FetchUseCase
 import javax.inject.Inject
@@ -27,7 +29,9 @@ constructor(
     private fun fetchAll() = viewModelScope.launch {
         try {
             _state.emit(TransactionState.Loading)
-            val response = fetchTransactions()
+            val response = withContext(Dispatchers.IO+viewModelScope.coroutineContext){
+                fetchTransactions()
+            }
             _state.emit(TransactionState.Success(response))
 
         } catch (e: Exception) {
