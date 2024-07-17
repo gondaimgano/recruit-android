@@ -41,6 +41,9 @@ class ListTransactionFragment : Fragment(R.layout.fragment_list_transaction) {
             adapter = transactionListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+        binding.tryAgainButton.setOnClickListener{
+            viewModel.fetchAll()
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

@@ -26,7 +26,7 @@ constructor(
         fetchAll()
     }
 
-    private fun fetchAll() = viewModelScope.launch {
+     fun fetchAll() = viewModelScope.launch {
         try {
             _state.emit(TransactionState.Loading)
             val response = withContext(Dispatchers.IO + viewModelScope.coroutineContext) {
