@@ -5,11 +5,15 @@ import androidx.core.content.ContextCompat
 import nz.co.test.transactions.services.Transaction
 
 object Utils {
-    fun formatTransactionAmount(transaction: Transaction): String {
+    sealed class Symbol(val label:String){
+        object Debit:Symbol("Dr:")
+        object Credit:Symbol("Cr:")
+    }
+    fun formatTransactionAmount(transaction: Transaction, drSymbol:String=Symbol.Debit.label, creditSymbol:String=Symbol.Credit.label): String {
         return if (transaction.credit > 0) {
-            "Cr: ${transaction.credit}"
+            "$creditSymbol ${transaction.credit}"
         } else {
-            "Dr: ${transaction.debit}"
+            "$drSymbol ${transaction.debit}"
         }
     }
 
