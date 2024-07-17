@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import nz.co.test.transactions.databinding.TransactionItemBinding
 import nz.co.test.transactions.services.Transaction
+import nz.co.test.transactions.utils.Utils
 
 class TransactionListAdapter(private val onClick: (t: Transaction) -> Unit) :
     ListAdapter<Transaction, TransactionListAdapter.ViewHolder>(ItemDiffCallback()) {
@@ -30,14 +31,8 @@ class TransactionListAdapter(private val onClick: (t: Transaction) -> Unit) :
             with(binding) {
                 binding.firstLetter.text = transaction.summary.first().toString()
                 transactionSummary.text = transaction.summary
-                transactionAmount.text =
-                    (if (transaction.credit > 0) transaction.credit else transaction.debit).toString()
-                transactionAmount.setTextColor(
-                    ContextCompat.getColor(
-                        itemView.context,
-                        if (transaction.credit > 0) android.R.color.holo_green_dark else android.R.color.holo_red_dark
-                    )
-                )
+                transactionAmount.text = Utils.formatTransactionAmount(transaction)
+                transactionAmount.setTextColor(Utils.getTransactionAmountColor(itemView.context,transaction))
 
                 itemView.setOnClickListener {
                     onClick(transaction)

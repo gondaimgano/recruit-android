@@ -29,12 +29,7 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
                 with(binding) {
                     textFirstLetter.text = it.summary.first().toString()
                     textAmount.text = Utils.formatTransactionAmount(it)
-                    textAmount.setTextColor(
-                        ContextCompat.getColor(
-                            this@TransactionDetailFragment.requireContext(),
-                            if (it.credit > 0) android.R.color.holo_green_dark else android.R.color.holo_red_dark
-                        )
-                    )
+                    textAmount.setTextColor(Utils.getTransactionAmountColor(this@TransactionDetailFragment.requireContext(),it))
                     textSummary.text = it.summary
                     textTransactionDate.text = it.transactionDate
 
