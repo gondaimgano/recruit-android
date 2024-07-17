@@ -29,20 +29,20 @@ constructor(
     private fun fetchAll() = viewModelScope.launch {
         try {
             _state.emit(TransactionState.Loading)
-            val response = withContext(Dispatchers.IO+viewModelScope.coroutineContext){
+            val response = withContext(Dispatchers.IO + viewModelScope.coroutineContext) {
                 fetchTransactions()
             }
             _state.emit(TransactionState.Success(response))
 
         } catch (e: Exception) {
-          _state.emit(TransactionState.Error(e.message))
+            _state.emit(TransactionState.Error(e.message))
         }
     }
 }
 
 
-sealed class TransactionState{
-    object Loading: TransactionState()
-    data class Success(val response:List<Transaction>):TransactionState()
-    data class Error(val message:String?):TransactionState()
+sealed class TransactionState {
+    object Loading : TransactionState()
+    data class Success(val response: List<Transaction>) : TransactionState()
+    data class Error(val message: String?) : TransactionState()
 }
