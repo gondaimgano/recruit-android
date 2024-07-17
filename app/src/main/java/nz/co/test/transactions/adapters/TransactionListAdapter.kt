@@ -3,6 +3,7 @@ package nz.co.test.transactions.adapters
 import android.app.Application
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +28,22 @@ class TransactionListAdapter :
     class ViewHolder(private val binding: TransactionItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(transaction: Transaction) {
-            binding.title.text = transaction.summary
+            with(binding) {
+                binding.firstLetter.text = transaction.summary.first().toString()
+                transactionSummary.text = transaction.summary
+                transactionAmount.text =
+                    (if (transaction.credit > 0) transaction.credit else transaction.debit).toString()
+                transactionAmount.setTextColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        if (transaction.credit > 0) android.R.color.holo_green_dark else android.R.color.holo_red_dark
+                    )
+                )
+
+                itemView.setOnClickListener {
+
+                }
+            }
         }
     }
 
