@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,7 +31,11 @@ class ListTransactionFragment : Fragment(R.layout.fragment_list_transaction) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListTransactionBinding.inflate(inflater, container, false)
-        val transactionListAdapter = TransactionListAdapter()
+        val transactionListAdapter = TransactionListAdapter{
+            findNavController().navigate(R.id.action_listTransactionFragment_to_transactionDetailFragment,Bundle().apply {
+                this.putParcelable(TransactionDetailFragment.TRANSACTION_KEY,it)
+            })
+        }
         with(binding.transactionList){
             adapter = transactionListAdapter
             layoutManager = LinearLayoutManager(requireContext())

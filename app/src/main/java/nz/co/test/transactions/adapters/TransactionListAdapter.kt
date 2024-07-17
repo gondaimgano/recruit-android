@@ -1,6 +1,5 @@
 package nz.co.test.transactions.adapters
 
-import android.app.Application
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import nz.co.test.transactions.databinding.TransactionItemBinding
 import nz.co.test.transactions.services.Transaction
 
-class TransactionListAdapter :
+class TransactionListAdapter(private val onClick:(t:Transaction)->Unit) :
     ListAdapter<Transaction, TransactionListAdapter.ViewHolder>(ItemDiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,7 +24,7 @@ class TransactionListAdapter :
         )
     }
 
-    class ViewHolder(private val binding: TransactionItemBinding) :
+    inner class ViewHolder(private val binding: TransactionItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(transaction: Transaction) {
             with(binding) {
@@ -41,7 +40,7 @@ class TransactionListAdapter :
                 )
 
                 itemView.setOnClickListener {
-
+                   onClick(transaction)
                 }
             }
         }

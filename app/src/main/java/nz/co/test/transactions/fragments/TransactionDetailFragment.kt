@@ -4,12 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import nz.co.test.transactions.R
 import nz.co.test.transactions.databinding.FragmentTransactionDetailBinding
+import nz.co.test.transactions.services.Transaction
 
 class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail) {
     private lateinit var binding: FragmentTransactionDetailBinding
+
+    companion object{
+        const val TRANSACTION_KEY = "TRANSACTION_KEY"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,6 +23,23 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTransactionDetailBinding.inflate(inflater, container, false)
+        arguments?.let {
+            it.getParcelable<Transaction>(TRANSACTION_KEY)?.let {
+                with(binding){
+                    textFirstLetter.text = it.summary.first().toString()
+                    textAmount.text = (if(it.credit>0) "Cr: ${it.credit}" else "Dr: ${it.debit}")
+                    textAmount.setTextColor(
+                        ContextCompat.getColor(
+                            this@TransactionDetailFragment.requireContext(),
+                            if (it.credit > 0) android.R.color.holo_green_dark else android.R.color.holo_red_dark
+                        )
+                    )
+                    textSummary.text= it.summary
+                    textTransactionDate.text = it.transactionDate
+
+                }
+            }
+        }
         return binding.root
     }
 }
