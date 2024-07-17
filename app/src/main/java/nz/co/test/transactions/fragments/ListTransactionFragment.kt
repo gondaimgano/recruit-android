@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import nz.co.test.transactions.R
 import nz.co.test.transactions.adapters.TransactionListAdapter
 import nz.co.test.transactions.databinding.FragmentListTransactionBinding
+import nz.co.test.transactions.viewmodels.TransactionState
 import nz.co.test.transactions.viewmodels.TransactionsViewModel
 
 @AndroidEntryPoint
@@ -46,7 +47,35 @@ class ListTransactionFragment : Fragment(R.layout.fragment_list_transaction) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect {
-                    transactionListAdapter.submitList(it)
+                    when (it) {
+                        is TransactionState.Error -> {
+                            with(binding) {
+                                transactionList.visibility = View.GONE
+                                tryAgainButton.visibility = View.VISIBLE
+                                messageText.visibility = View.VISIBLE
+                                messageText.text = it.message
+                            }
+                        }
+
+                        is TransactionState.Loading -> {
+                            with(binding) {
+                                transactionList.visibility = View.GONE
+                                tryAgainButton.visibility = View.GONE
+                                messageText.visibility = View.VISIBLE
+                                messageText.text = getString(R.string.loading)
+                            }
+                        }
+
+                        is TransactionState.Success -> {
+                            with(binding) {
+                                transactionList.visibility = View.VISIBLE
+                                tryAgainButton.visibility = View.GONE
+                                messageText.visibility = View.GONE
+                            }
+                            transactionListAdapter.submitList(it.response)
+                        }
+                    }
+
                 }
             }
         }

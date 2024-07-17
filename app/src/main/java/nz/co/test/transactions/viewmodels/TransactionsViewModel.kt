@@ -18,7 +18,7 @@ constructor(
     private val fetchTransactions: FetchUseCase<List<Transaction>>
 ) : ViewModel() {
 
-    private var _state = MutableStateFlow(emptyList<Transaction>())
+    private var _state = MutableStateFlow<TransactionState>(TransactionState.Loading)
     val state = _state.asStateFlow()
 
     init {
@@ -27,11 +27,19 @@ constructor(
 
     private fun fetchAll() = viewModelScope.launch {
         try {
+            _state.emit(TransactionState.Loading)
             val response = fetchTransactions()
-            _state.emit(response)
+            _state.emit(TransactionState.Success(response))
 
         } catch (e: Exception) {
-
+          _state.emit(TransactionState.Error(e.message))
         }
     }
+}
+
+
+sealed class TransactionState{
+    object Loading: TransactionState()
+    data class Success(val response:List<Transaction>):TransactionState()
+    data class Error(val message:String?):TransactionState()
 }
