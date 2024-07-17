@@ -19,4 +19,9 @@ object Utils {
             if (transaction.credit > 0) android.R.color.holo_green_dark else android.R.color.holo_red_dark
         )
     }
+
+    fun getAmountCalculatedGST(transaction: Transaction): Double{
+        return( if (transaction.credit > 0) transaction.credit
+        else transaction.debit)   * 0.15
+    }
 }

@@ -32,6 +32,7 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
                     textAmount.setTextColor(Utils.getTransactionAmountColor(this@TransactionDetailFragment.requireContext(),it))
                     textSummary.text = it.summary
                     textTransactionDate.text = it.transactionDate
+                    textGST.text = "15% GST: ${Utils.getAmountCalculatedGST(it)}"
 
                 }
             }
