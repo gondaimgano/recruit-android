@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import nz.co.test.transactions.R
 import nz.co.test.transactions.databinding.FragmentTransactionDetailBinding
 import nz.co.test.transactions.services.Transaction
+import nz.co.test.transactions.utils.Utils
 
 class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail) {
     private lateinit var binding: FragmentTransactionDetailBinding
@@ -27,7 +28,7 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
             it.getParcelable<Transaction>(TRANSACTION_KEY)?.let {
                 with(binding){
                     textFirstLetter.text = it.summary.first().toString()
-                    textAmount.text = (if(it.credit>0) "Cr: ${it.credit}" else "Dr: ${it.debit}")
+                    textAmount.text = Utils.formatTransactionAmount(it)
                     textAmount.setTextColor(
                         ContextCompat.getColor(
                             this@TransactionDetailFragment.requireContext(),
