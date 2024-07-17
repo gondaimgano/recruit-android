@@ -1,3 +1,12 @@
+# Personal Note:
+Instead of Dagger I went on to use Hilt as the Dependency of choice.
+
+# Screenshots
+
+| Screenshot 1                | Screenshot 2                |
+|-----------------------------|-----------------------------|
+| <img src="https://github.com/gondaimgano/recruit-android/blob/main/Screenshot_20240717_130242.png" width="300"> | <img src="https://github.com/gondaimgano/recruit-android/blob/main/Screenshot_20240717_130300.png" width="300"> |
+
 
 # Android
 Create a simple application that will fetch a list of transactions from an api endpoint and display them in a list.  When a user selects a transaction they will be shown a second screen that will display a more detailed view of the transaction data. 
