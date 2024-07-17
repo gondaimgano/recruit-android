@@ -25,7 +25,7 @@ constructor(
         fetchAll()
     }
 
-    fun fetchAll() = viewModelScope.launch {
+    private fun fetchAll() = viewModelScope.launch {
         try {
             val response = fetchTransactions()
             _state.emit(response)

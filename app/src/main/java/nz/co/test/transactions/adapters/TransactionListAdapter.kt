@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import nz.co.test.transactions.databinding.TransactionItemBinding
 import nz.co.test.transactions.services.Transaction
 
-class TransactionListAdapter(private val onClick:(t:Transaction)->Unit) :
+class TransactionListAdapter(private val onClick: (t: Transaction) -> Unit) :
     ListAdapter<Transaction, TransactionListAdapter.ViewHolder>(ItemDiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -40,7 +40,7 @@ class TransactionListAdapter(private val onClick:(t:Transaction)->Unit) :
                 )
 
                 itemView.setOnClickListener {
-                   onClick(transaction)
+                    onClick(transaction)
                 }
             }
         }

@@ -24,19 +24,21 @@ import nz.co.test.transactions.viewmodels.TransactionsViewModel
 class ListTransactionFragment : Fragment(R.layout.fragment_list_transaction) {
 
     private lateinit var binding: FragmentListTransactionBinding
-    private  val viewModel: TransactionsViewModel by viewModels()
+    private val viewModel: TransactionsViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListTransactionBinding.inflate(inflater, container, false)
-        val transactionListAdapter = TransactionListAdapter{
-            findNavController().navigate(R.id.action_listTransactionFragment_to_transactionDetailFragment,Bundle().apply {
-                this.putParcelable(TransactionDetailFragment.TRANSACTION_KEY,it)
-            })
+        val transactionListAdapter = TransactionListAdapter {
+            findNavController().navigate(
+                R.id.action_listTransactionFragment_to_transactionDetailFragment,
+                Bundle().apply {
+                    this.putParcelable(TransactionDetailFragment.TRANSACTION_KEY, it)
+                })
         }
-        with(binding.transactionList){
+        with(binding.transactionList) {
             adapter = transactionListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }

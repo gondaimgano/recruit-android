@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class FetchTransactionUseCase
 @Inject
-    constructor(private  val service: TransactionsService): FetchUseCase<List<Transaction>> {
+constructor(private val service: TransactionsService) : FetchUseCase<List<Transaction>> {
     override suspend fun invoke(): List<Transaction> {
         return service.retrieveTransactions()
     }

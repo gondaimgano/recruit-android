@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment_container).navigateUp() || super.onSupportNavigateUp()
     }

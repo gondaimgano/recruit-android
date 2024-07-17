@@ -14,7 +14,7 @@ import nz.co.test.transactions.utils.Utils
 class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail) {
     private lateinit var binding: FragmentTransactionDetailBinding
 
-    companion object{
+    companion object {
         const val TRANSACTION_KEY = "TRANSACTION_KEY"
     }
 
@@ -26,7 +26,7 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
         binding = FragmentTransactionDetailBinding.inflate(inflater, container, false)
         arguments?.let {
             it.getParcelable<Transaction>(TRANSACTION_KEY)?.let {
-                with(binding){
+                with(binding) {
                     textFirstLetter.text = it.summary.first().toString()
                     textAmount.text = Utils.formatTransactionAmount(it)
                     textAmount.setTextColor(
@@ -35,7 +35,7 @@ class TransactionDetailFragment : Fragment(R.layout.fragment_transaction_detail)
                             if (it.credit > 0) android.R.color.holo_green_dark else android.R.color.holo_red_dark
                         )
                     )
-                    textSummary.text= it.summary
+                    textSummary.text = it.summary
                     textTransactionDate.text = it.transactionDate
 
                 }

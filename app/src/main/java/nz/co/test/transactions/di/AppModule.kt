@@ -22,6 +22,6 @@ class AppModule {
         .create(TransactionsService::class.java)
 
     @Provides
-    fun providesTransactionUseCase(transactionsService: TransactionsService): FetchUseCase<List<Transaction>>
-    = FetchTransactionUseCase(transactionsService)
+    fun providesTransactionUseCase(transactionsService: TransactionsService): FetchUseCase<List<Transaction>> =
+        FetchTransactionUseCase(transactionsService)
 }
