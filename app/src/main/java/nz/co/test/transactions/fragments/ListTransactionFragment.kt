@@ -41,7 +41,7 @@ class ListTransactionFragment : Fragment(R.layout.fragment_list_transaction) {
             adapter = transactionListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-        binding.tryAgainButton.setOnClickListener{
+        binding.tryAgainButton.setOnClickListener {
             viewModel.fetchAll()
         }
 
