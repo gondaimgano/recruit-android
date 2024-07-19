@@ -3,6 +3,8 @@ package nz.co.test.transactions.utils
 import android.content.Context
 import androidx.core.content.ContextCompat
 import nz.co.test.transactions.services.Transaction
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 object Utils {
     sealed class Symbol(val label:String){
@@ -24,8 +26,14 @@ object Utils {
         )
     }
 
-    fun getAmountCalculatedGST(transaction: Transaction): Double{
-        return( if (transaction.credit > 0) transaction.credit
-        else transaction.debit)   * 0.15
+    fun getAmountCalculatedGST(transaction: Transaction): Double {
+        return formatGST(
+            (if (transaction.credit > 0) transaction.credit
+            else transaction.debit) * 0.15
+        )
+    }
+
+    private fun formatGST(double: Double): Double {
+        return BigDecimal(double).setScale(2, RoundingMode.HALF_UP).toDouble()
     }
 }
