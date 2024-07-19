@@ -42,4 +42,32 @@ class UtilsTest {
         // Then it should format as "Dr: 0.0" (assuming debit default)
         assertEquals("Dr: 0.0", formattedAmount)
     }
+
+    @Test
+    fun `test getAmountCalculatedGST with credit transaction`() {
+        val transaction = Transaction(id = 0, credit = 100.0, debit = 0.0,summary = "", transactionDate = "")
+        val result = Utils.getAmountCalculatedGST(transaction)
+        assertEquals(15.00, result, 0.0)
+    }
+
+    @Test
+    fun `test getAmountCalculatedGST with debit transaction`() {
+        val transaction = Transaction(id = 0, credit = 0.0, debit = 100.0, summary = "", transactionDate = "")
+        val result = Utils.getAmountCalculatedGST(transaction)
+        assertEquals(15.00, result, 0.0)
+    }
+
+    @Test
+    fun `test getAmountCalculatedGST with zero credit and debit`() {
+        val transaction = Transaction(id = 0, credit = 0.0, debit = 0.0, summary = "", transactionDate = "")
+        val result = Utils.getAmountCalculatedGST(transaction)
+        assertEquals(0.00, result, 0.0)
+    }
+
+    @Test
+    fun `test getAmountCalculatedGST with both credit and debit`() {
+        val transaction = Transaction(id = 0, credit = 100.0, debit = 50.0, summary = "", transactionDate = "")
+        val result = Utils.getAmountCalculatedGST(transaction)
+        assertEquals(15.00, result, 0.0) // should use credit as it's greater than 0
+    }
 }
